@@ -100,7 +100,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           />
         </div>
       </SidebarHeader>
-      <SidebarContent className="!bg-black text-white">
+      <SidebarContent className="!bg-black ">
         <NavProjects projects={data.projects} />
       </SidebarContent>
       {/* <SidebarRail className="!bg-gradient-to-br from-purple-600 to-purple-900 border-t border-gray-700" /> */}

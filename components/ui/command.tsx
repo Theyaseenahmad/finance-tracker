@@ -14,9 +14,9 @@ import {
 } from "@/components/ui/dialog"
 
 function Command({
-  className,
+  className = "",
   ...props
-}: React.ComponentProps<typeof CommandPrimitive>) {
+}: React.ComponentPropsWithoutRef<typeof CommandPrimitive>) {  // ✅ Fixes the issu {
   return (
     <CommandPrimitive
       data-slot="command"
