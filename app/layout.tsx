@@ -4,16 +4,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import QueryProvider from "./providers/QueryProvider";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
-// import {
-//   Breadcrumb,
-//   BreadcrumbItem,
-//   BreadcrumbLink,
-//   BreadcrumbList,
-//   BreadcrumbPage,
-//   BreadcrumbSeparator,
-// } from "@/components/ui/breadcrumb";
-// Preview
-// Code
+
 import { CalendarDays } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -33,12 +24,12 @@ import {
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Solar - Ecommerce Platform",
-  description: "A Ecommerce Platform for Solar Electricals",
+  title: "Finance - A Finance Tracker",
+  description: "An online finance Tracker",
   icons: {
-    icon: "/s3.png", // Path to your favicon
-    shortcut: "/s3.png",
-    apple: "/s3.png",
+    icon: "/flogo.png", // Path to your favicon
+    shortcut: "/flogo.png",
+    apple: "/flogo.png",
   },
 };
 

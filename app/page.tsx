@@ -40,7 +40,7 @@ const Home = () => {
 
       {/* Content */}
       <div
-        className={`content w-full h-full transition-opacity duration-1000 ${
+        className={`content w-full h-full bg-gradient-to-br from-purple-600 to-purple-900  transition-opacity duration-1000 ${
           isCurtainLifted ? "opacity-100" : "opacity-0"
         }`}
       >
