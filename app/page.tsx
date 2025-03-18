@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import Loader from "../components/manual/Loader"
-import Dashboard from "../components/manual/Dashboard";
+import Loader from "../components/manual/Landing/Loader"
+import Dashboard from "../components/manual/Landing/Dashboard";
 
 const Home = () => {
   const [isCurtainLifted, setIsCurtainLifted] = useState(false);

@@ -1,8 +1,8 @@
 'use client'
-import DashboardTable from "./Dashboard-Table"
+import DashboardTable from "../Landing/Dashboard-Table"
 import SheetRow from "./Sheet-Row"
 
-export default function Transact() {
+export default function TransactionController() {
   return (
         <>
         <SheetRow></SheetRow>

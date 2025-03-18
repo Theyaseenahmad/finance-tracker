@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import GetTransactions from '@/lib/http/Get-Transactions';
 import TotalExpenseChart from './LineChart';
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
-import { TransactionTable } from './Transaction-table';
+import { TransactionTable } from '../Transactions/Transaction-table';
 import { RecentColumns } from './Recent-Transactions-Column';
 
 const Dashboard = () => {

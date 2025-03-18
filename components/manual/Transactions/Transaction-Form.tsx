@@ -19,7 +19,7 @@ import { toast } from "sonner"
 import { TransactionSchema } from "@/lib/validators/TransactionSchema";
 import { TransactionData } from "@/app/types/TransactionData";
 import CreateTransaction from "@/lib/http/Create-Transaction";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select";
 import { categories } from "./Transaction-Updater";
 
 

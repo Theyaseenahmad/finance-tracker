@@ -1,10 +1,10 @@
 import React from 'react'
-import { TransactionTable } from './Transaction-table'
-import { columns } from './Transaction-Column'
+import { TransactionTable } from '../Transactions/Transaction-table'
+import { columns } from '../Transactions/Transaction-Column'
 import { useQuery } from '@tanstack/react-query'
 import GetTransactions from '@/lib/http/Get-Transactions'
 import { Loader2 } from 'lucide-react'
-import MonthlyExpensesChart from './Single-Chart'
+import MonthlyExpensesChart from '../Transactions/Single-Chart'
 
 const DashboardTable = () => {
   const {data,isError,isLoading} = useQuery({

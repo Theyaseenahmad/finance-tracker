@@ -23,10 +23,12 @@ import {
 } from "@/components/ui/dialog";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../ui/select";
 import UpdateTransaction, { UpdatedData } from "@/lib/http/Update-transaction";
 import { TransactionUpdateSchema } from "@/lib/validators/TransactionUpdateSchema";
 import { BookOpen, Film, HeartPulse, Home, MoreHorizontal, Shirt, ShoppingCart } from "lucide-react";
+import { TransactionData } from "@/app/types/TransactionData";
+import { Row } from "@tanstack/react-table";
 
 export const categories = [
   {
@@ -73,7 +75,16 @@ export const categories = [
   },
 ];
 
-export function TransactionUpdater({ row }: any) {
+interface TransactionWithId extends TransactionData {
+  _id?: string;
+}
+
+interface TransactionDeleterProps {
+  row: Row<TransactionWithId>;
+}
+
+
+export function TransactionUpdater({ row }: TransactionDeleterProps) {
   const { original } = row;
   const [isOpen, setIsOpen] = React.useState(false); // State to control dialog visibility
 

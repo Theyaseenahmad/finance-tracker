@@ -1,12 +1,28 @@
 'use client';
 
-import BudgetManagement from '@/components/manual/CategoryBudget';
-import CompareChart from '@/components/manual/CompareChart';
+import BudgetManagement from '@/components/manual/Budget/Category-Budget';
+import CompareChart from '@/components/manual/Budget/Compare-Chart';
 import GetBudget from '@/lib/http/Get-Budget';
 import GetTransactions from '@/lib/http/Get-Transactions';
 import { useQuery } from '@tanstack/react-query';
 import { Loader2 } from 'lucide-react';
 import React from 'react';
+
+type Transaction = {
+  category: string;
+  amount: number;
+  date: string;
+};
+
+type BudgetCategory = {
+  [key: string]: number;
+};
+
+type BudgetVsActual = {
+  category: string;
+  budget: number;
+  actual: number;
+};
 
 const Budget = () => {
   // Fetch transactions
@@ -22,8 +38,8 @@ const Budget = () => {
   });
 
   // Aggregate data by category
-  const aggregateDataByCategory = (transactions: any[]) => {
-    const aggregatedData: { [key: string]: number } = {};
+  const aggregateDataByCategory = (transactions: Transaction[]): { name: string; value: number }[] => {
+    const aggregatedData: BudgetCategory = {};
     transactions.forEach(({ category, amount }) => {
       aggregatedData[category] = (aggregatedData[category] || 0) + amount;
     });
@@ -39,7 +55,11 @@ const Budget = () => {
   // Find highest spending category
   let highestCategory = '', highest = 0;
   if (aggregatedData.length) {
-    const highestData = aggregatedData.reduce((acc, ele) => (ele.value > acc.highest ? { highest: ele.value, highestCategory: ele.name } : acc), { highest: 0, highestCategory: '' });
+    const highestData = aggregatedData.reduce(
+      (acc: { highest: number; highestCategory: string }, ele) =>
+        ele.value > acc.highest ? { highest: ele.value, highestCategory: ele.name } : acc,
+      { highest: 0, highestCategory: '' }
+    );
     highest = highestData.highest;
     highestCategory = highestData.highestCategory;
   }
@@ -47,13 +67,17 @@ const Budget = () => {
   // Find biggest transaction
   let highestAmount = 0, highestDate = '';
   if (transactionsData?.transactions?.length) {
-    const highestTransaction = transactionsData.transactions.reduce((acc, t) => (t.amount > acc.highestAmount ? { highestAmount: t.amount, highestDate: t.date } : acc), { highestAmount: 0, highestDate: '' });
+    const highestTransaction = transactionsData.transactions.reduce(
+      (acc: { highestAmount: number; highestDate: string }, t: Transaction) =>
+        t.amount > acc.highestAmount ? { highestAmount: t.amount, highestDate: t.date } : acc,
+      { highestAmount: 0, highestDate: '' }
+    );
     highestAmount = highestTransaction.highestAmount;
     highestDate = highestTransaction.highestDate;
   }
 
   // Prepare budget vs actual comparison data
-  let budgetVsActualData = [];
+  let budgetVsActualData: BudgetVsActual[] = [];
   if (budgetData?.budget?.length) {
     const budgetCategories = Object.keys(budgetData.budget[0]).filter(key => key !== '_id' && key !== 'updatedAt');
 
@@ -107,7 +131,6 @@ const Budget = () => {
               <h3 className="font-medium">{`💰 Your biggest transaction was ₹${highestAmount} on ${highestDate}`}</h3>
             </div>
           </div>
-
         </div>
       </div>
     </div>

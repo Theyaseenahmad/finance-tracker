@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,32 +13,44 @@ import DeleteTransaction from "@/lib/http/Delete-Transaction";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
+import { Row } from "@tanstack/react-table";
+import { TransactionData } from "@/app/types/TransactionData";
 
-export function TransactionDeleter({ row }: any) {
+// Ensure _id is included
+interface TransactionWithId extends TransactionData {
+  _id?: string;
+}
+
+interface TransactionDeleterProps {
+  row: Row<TransactionWithId>;
+}
+
+export function TransactionDeleter({ row }: TransactionDeleterProps) {
   const { original } = row;
   const [isOpen, setIsOpen] = useState(false);
 
-  console.log('idd',original._id);
-  
+  console.log("Deleting Transaction ID:", original._id);
 
   const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
-    mutationKey: ["delete"],
+    mutationKey: ["delete-transaction"],
     mutationFn: (_id: string) => DeleteTransaction(_id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["get-transactions"] });
-      toast("Transaction deleted successfully");
+      toast.success("Transaction deleted successfully");
       setIsOpen(false);
     },
     onError: () => {
-      toast("Failed to delete transaction");
+      toast.error("Failed to delete transaction");
     },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    mutate(original._id);
+    if(original._id){
+      mutate(original._id);
+    }
   };
 
   return (
@@ -50,8 +62,7 @@ export function TransactionDeleter({ row }: any) {
         <DialogHeader>
           <DialogTitle>Delete Transaction</DialogTitle>
           <DialogDescription>
-            Are you sure you want to delete this transaction? This action cannot
-            be undone.
+            Are you sure you want to delete this transaction? This action cannot be undone.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>

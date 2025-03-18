@@ -1,6 +1,6 @@
 import React from 'react'
-import { Sheet, SheetContent,  SheetTitle,  SheetTrigger } from '../ui/sheet'
-import { Button } from '../ui/button'
+import { Sheet, SheetContent,  SheetTitle,  SheetTrigger } from '../../ui/sheet'
+import { Button } from '../../ui/button'
 import TransactionForm from './Transaction-Form'
 
 const SideSheet = ({lastpath}:{lastpath:string}) => {
