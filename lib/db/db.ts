@@ -1,30 +1,20 @@
 import mongoose from "mongoose";
-import dotenv from 'dotenv'
+import dotenv from "dotenv";
 
-dotenv.config()
+dotenv.config();
 
-const MONGODB_URI = process.env.MONGODB_URI as string;
+const MONGODB_URI = process.env.MONGODB_URI!;
 
 if (!MONGODB_URI) {
-  throw new Error("⚠️ MONGODB_URI is not defined in .env.local");
+  throw new Error("⚠️ MONGODB_URI is not defined in .env");
 }
-
-
-const cached = (global as any).mongoose || { conn: null, promise: null };
 
 export async function connectToDB() {
-  if (cached.conn) return cached.conn;
-
-  if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGODB_URI, {
-      bufferCommands: false, // Prevents command queuing
-    });
+  try {
+    await mongoose.connect(MONGODB_URI!, { bufferCommands: false });
+    console.log("✅ Connected to MongoDB");
+  } catch (error) {
+    console.error("❌ MongoDB connection error:", error);
+    process.exit(1);
   }
-
-  cached.conn = await cached.promise;
-  return cached.conn;
-}
-
-if (process.env.NODE_ENV !== "production") {
-  (global as any).mongoose = cached;
 }

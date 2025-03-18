@@ -1,9 +1,9 @@
 export interface CategoryBudgetType {
-    Education:string,
-    Other:string,
-    Clothing:string,
-    Groceries:string,
-    Rent:string,
-    Entertainment:string,
-    Healthcare:string
+    Education:number,
+    Other:number,
+    Clothing:number,
+    Groceries:number,
+    Rent:number,
+    Entertainment:number,
+    Healthcare:number
  }

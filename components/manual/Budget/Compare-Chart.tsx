@@ -1,7 +1,17 @@
 import React from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid, ResponsiveContainer } from "recharts";
 
-const CompareChart = ({ data }) => {
+type BudgetVsActual = {
+  category: string;
+  budget: number;
+  actual: number;
+};
+
+
+const CompareChart = ({ data }: { data: BudgetVsActual[] }) => {
+
+  console.log("chart datttaaaa",data);
+  
   return (
     
   <ResponsiveContainer width="100%" height={300} className="">

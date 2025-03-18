@@ -21,7 +21,6 @@ import {
   SidebarContent,
   // SidebarFooter,
   SidebarHeader,
-  SidebarRail,
 } from "@/components/ui/sidebar"
 // import { TeamSwitcher } from "./team-switcher"
 import { NavProjects } from "./nav-projects"
@@ -102,7 +101,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </div>
       </SidebarHeader>
       <SidebarContent className="!bg-black text-white">
-        <NavProjects projects={data.projects} className="text-white" />
+        <NavProjects projects={data.projects} />
       </SidebarContent>
       {/* <SidebarRail className="!bg-gradient-to-br from-purple-600 to-purple-900 border-t border-gray-700" /> */}
     </Sidebar>

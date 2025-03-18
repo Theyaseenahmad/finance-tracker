@@ -6,30 +6,45 @@ import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recha
 import { TransactionTable } from '../Transactions/Transaction-table';
 import { RecentColumns } from './Recent-Transactions-Column';
 
+// Define TypeScript types
+type Transaction = {
+  amount:number,
+  date: string,
+  description : string,
+  category:string
+
+};
+
+type TransactionsResponse = {
+  transactions: Transaction[];
+};
+
 const Dashboard = () => {
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#AF19FF", "#FF3366", "#33FF57"];
 
-
-  const { data } = useQuery({
+  const { data } = useQuery<TransactionsResponse>({
     queryKey: ['get-transactions'],
     queryFn: GetTransactions,
   });
 
-  const aggregateDataByCategory = (transactions: any[]) => {
-    const aggregatedData: { [key: string]: number } = {};
+  // Function to aggregate transactions by category
+  const aggregateDataByCategory = (transactions: Transaction[]): { name: string; value: number }[] => {
+    const aggregatedData: Record<string, number> = {};
+
     transactions.forEach(({ category, amount }) => {
       aggregatedData[category] = (aggregatedData[category] || 0) + amount;
     });
+
     return Object.entries(aggregatedData).map(([name, value]) => ({ name, value }));
   };
 
   let totalExpense = 0;
-  let aggregatedData: any[] = [];
-  let recentTransactions: any[] = [];
+  let aggregatedData: { name: string; value: number }[] = [];
+  let recentTransactions: Transaction[] = [];
 
-  if (data) {
+  if (data?.transactions) {
     totalExpense = data.transactions.reduce((sum, transaction) => sum + transaction.amount, 0);
-    recentTransactions = data.transactions
+    recentTransactions = [...data.transactions]
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .slice(0, 3);
     aggregatedData = aggregateDataByCategory(data.transactions);
@@ -69,10 +84,10 @@ const Dashboard = () => {
                 dataKey="value"
                 nameKey="name"
                 label={({ name, percent, x, y, index }) => {
-                  const isMobile = typeof window !== "undefined" && window.innerWidth < 768; // Check for mobile
+                  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
                   const offset = 35;
                   const angle = Math.atan2(y - 200, x - 200);
-                
+
                   return (
                     <text
                       x={x + Math.cos(angle) * offset}
@@ -87,9 +102,8 @@ const Dashboard = () => {
                     </text>
                   );
                 }}
-                
               >
-                {aggregatedData?.map((entry, index) => (
+                {aggregatedData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
